@@ -63,6 +63,6 @@ This is a full-stack web application developed as an internship assignment proje
 
 ## NOTE
 
-- **Live Frontend URL not work properly now. This problem is from render server. not from our side becaue Live API URL working properly on POSTMAN.**
+- **Live Frontend URL not work properly now. This problem is from render server. not from our side because Live API URL working properly on POSTMAN.**
 
 ### Demo Video Link: https://youtu.be/2lYV9j6G-is
