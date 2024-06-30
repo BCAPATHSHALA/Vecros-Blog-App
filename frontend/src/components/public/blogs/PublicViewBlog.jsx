@@ -1,0 +1,60 @@
+import {
+  Box,
+  Heading,
+  Text,
+  VStack,
+  HStack,
+  Badge,
+  useColorModeValue,
+  Card,
+} from "@chakra-ui/react";
+import ReactHtmlParser from "html-react-parser";
+
+const PublicViewBlog = ({ blog }) => {
+  return (
+    <Box
+      display="flex"
+      flexDirection="column"
+      justifyContent="space-between"
+      maxW="full"
+      borderRadius="lg"
+      boxShadow="md"
+      p={6}
+      bg={useColorModeValue("white", "gray.800")}
+      minH="100vh"
+    >
+      <VStack align="start" spacing={4}>
+        {/* Card Section */}
+        <Card width="100%" h="25vh" position="relative">
+          <VStack w="100%" h="100%" justifyContent="center">
+            <Heading as="h2" size="lg" textTransform="uppercase">
+              {blog.title}
+            </Heading>
+
+            <Text fontSize="md">{blog.description}</Text>
+          </VStack>
+        </Card>
+
+        {/* Blog Content */}
+        <Box mt={4} w="100%">
+          {ReactHtmlParser(blog.content)}
+        </Box>
+      </VStack>
+
+      <VStack mt={4} align="start" spacing={2}>
+        {/* Created and Updated Dates */}
+        <HStack justifyContent="space-between" w="full">
+          <Text fontSize="sm" color="gray.500">
+            Created at: {new Date(blog.createdAt).toLocaleDateString()}
+          </Text>
+
+          <Text fontSize="sm" color="gray.500" textTransform="uppercase">
+            {blog.category}
+          </Text>
+        </HStack>
+      </VStack>
+    </Box>
+  );
+};
+
+export default PublicViewBlog;
