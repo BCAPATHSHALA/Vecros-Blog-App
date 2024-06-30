@@ -9,7 +9,7 @@ export const UserRolesEnum = {
   MODERATOR: "moderator",
   GUEST: "guest",
   PREMIUM: "premium",
-};
+}; 
 
 export const AvailableUserRoles = Object.values(UserRolesEnum);
 

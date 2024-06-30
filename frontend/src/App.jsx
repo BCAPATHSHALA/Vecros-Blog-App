@@ -62,7 +62,7 @@ const App = () => {
   }, [accessToken, dispatch, navigate]);
   return (
     <>
-      <ColorModeSwitcher />
+      {/* <ColorModeSwitcher /> */}
       <Flex minH="100vh" flexWrap="wrap" flexDir={"column"}>
         <Header />
         <main>
