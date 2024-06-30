@@ -6,7 +6,7 @@ import { getItem, removeItem, setItem } from "./localStorageManagement.js";
 
 // Step 1: Create Axios instance
 const api = axios.create({
-  baseURL: `https://vecros-blog-app.onrender.com`,
+  baseURL: `https://vecros-blog-app-tau.vercel.app/api/v1`,
   withCredentials: true,
 });
 
