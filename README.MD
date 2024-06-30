@@ -1,6 +1,6 @@
 # Vecros Blog Application
 
-![Vecros Technologies](https://res.cloudinary.com/dq3pru6ji/image/upload/v1719737006/vecros_app_ovxfro.png)
+![Vecros Technologies](https://res.cloudinary.com/dq3pru6ji/image/upload/v1719732821/VECROS_BLOG_APPLICATION_DB_PROTOTYPE_fuzdyy.png)
 
 ## Description
 
