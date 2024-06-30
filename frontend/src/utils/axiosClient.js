@@ -2,11 +2,11 @@ import axios from "axios";
 import { getItem, removeItem, setItem } from "./localStorageManagement.js";
 
 // Frontend URI
-// const frontendURI = import.meta.env.VITE_FRONTEND_URI;
+const frontendURI = import.meta.env.VITE_FRONTEND_URI;
 
 // Step 1: Create Axios instance
 const api = axios.create({
-  baseURL: `https://vecros-blog-app-tau.vercel.app/api/v1`,
+  baseURL: `${frontendURI}/api/v1`,
   withCredentials: true,
 });
 
