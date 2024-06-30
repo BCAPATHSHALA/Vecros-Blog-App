@@ -23,6 +23,10 @@ app.use(express.static("public"));
 // Cookie Data for performing the CRUD operations through our server
 app.use(cookieParser());
 
+app.get("/", (req, res) => {
+  return res.send("<h1>Vecros blog app server is working fine✅</h1>");
+});
+
 // Import the routes
 import userRouter from "./routes/user.routes.js";
 import blogRouter from "./routes/blog.routes.js";
