@@ -9,8 +9,8 @@
     "dev": "nodemon src/index.js"
   },
   "keywords": [
-    "Console",
-    "Busters"
+    "vecros",
+    "app"
   ],
   "author": "Manoj Kumar",
   "license": "ISC",
