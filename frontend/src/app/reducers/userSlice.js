@@ -44,12 +44,10 @@ const userSlice = createSlice({
     },
     loadProfileSuccess: (state, action) => {
       state.loading = false;
-      state.isAuthenticated = true;
       state.userData = action.payload?.data?.user;
     },
     loadProfileFail: (state, action) => {
       state.loading = false;
-      state.isAuthenticated = false;
       state.error = action.payload?.message;
       removeItem("accessToken");
     },
