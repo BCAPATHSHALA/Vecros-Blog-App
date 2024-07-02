@@ -53,7 +53,7 @@ const ResetPasswordForm = () => {
   }, [dispatch, error, message, navigate]);
 
   return (
-    <Center minH="100vh">
+    <Center minH={{ base: "70vh", md: "75vh" }}>
       <Box
         p={8}
         rounded="lg"

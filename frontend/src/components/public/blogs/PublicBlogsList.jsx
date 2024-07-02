@@ -16,27 +16,25 @@ import {
 } from "@chakra-ui/react";
 import { FcEmptyTrash } from "react-icons/fc";
 import { useState, useEffect } from "react";
-import CustomModal from "../../common/CustomModal";
-import PublicViewBlog from "./PublicViewBlog";
 import { fetchAllBlogsPulically } from "../../../app/actions/userAction";
-import { AvailableBlogCategory } from "../../../constant"; // Import your blog categories
+import { AvailableBlogCategory } from "../../../constant";
+import { useNavigate } from "react-router-dom";
 
 const PublicBlogsList = () => {
   const dispatch = useDispatch();
   const { loading, blogList, totalPages, currentPage } = useSelector(
     (state) => state.user
   );
-  const [isFetchModalOpen, setIsFetchModalOpen] = useState(false);
-  const [selectedBlog, setSelectedBlog] = useState(null);
+
   const [selectedCategory, setSelectedCategory] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchAllBlogsPulically(currentPage, selectedCategory));
   }, [dispatch, currentPage, selectedCategory]);
 
   const handleFetchBlog = (blog) => {
-    setIsFetchModalOpen(true);
-    setSelectedBlog(blog);
+    navigate(`/blog/${blog?.slug}`, { state: { blog } });
   };
 
   const onSubmitToPaginate = (newPage) => {
@@ -67,21 +65,30 @@ const PublicBlogsList = () => {
       {loading ? (
         <Spinner size="xl" />
       ) : blogList && blogList.length ? (
-        <HStack width={"100%"} flexWrap={"wrap"} justifyContent={"center"}>
+        <HStack
+          width={"100%"}
+          flexWrap={"wrap"}
+          justifyContent={{ base: "center", md: "space-between" }}
+        >
           {blogList.map((blog) => (
-            <Card key={blog._id} maxW="sm" h={"400px"}>
+            <Card
+              key={blog._id}
+              w={"100%"}
+              h={{ base: "auto", md: "400px" }}
+              mb={4}
+            >
               <CardBody>
                 <VStack
                   w="100%"
                   h="100%"
                   justifyContent="center"
-                  bg={"gray.800"}
                   p={5}
                   borderRadius={4}
+                  bg={"gray.800"}
                 >
                   <Heading
                     textAlign={"center"}
-                    fontSize={"1.5rem"}
+                    fontSize={{ base: "0.8rem", md: "1.5rem" }}
                     textTransform="uppercase"
                   >
                     {blog.title}
@@ -91,12 +98,18 @@ const PublicBlogsList = () => {
                       {`@${blog.owner.username}`}
                     </Badge>
                   )}
-                  <Text fontSize="md">{blog.description}</Text>
+                  <Text
+                    p={5}
+                    textAlign={"center"}
+                    fontSize={{ base: "sm", md: "md" }}
+                  >
+                    {blog.description}
+                  </Text>
                 </VStack>
               </CardBody>
               <Divider />
               <CardFooter>
-                <HStack gap={4} p={2} justifyContent={"center"}>
+                <VStack w="full" spacing={2}>
                   <Button
                     variant="solid"
                     colorScheme="green"
@@ -105,17 +118,17 @@ const PublicBlogsList = () => {
                     Read More
                   </Button>
                   <Text
-                    fontSize="sm"
+                    fontSize={{ base: "xs", md: "sm" }}
                     color="gray.500"
                     textTransform="uppercase"
                     fontWeight={"900"}
                   >
                     {blog.category}
                   </Text>
-                  <Text fontSize="sm" color="gray.500">
+                  <Text fontSize={{ base: "xs", md: "sm" }} color="gray.500">
                     Created at: {new Date(blog.createdAt).toLocaleDateString()}
                   </Text>
-                </HStack>
+                </VStack>
               </CardFooter>
             </Card>
           ))}
@@ -149,16 +162,6 @@ const PublicBlogsList = () => {
           Next
         </Button>
       </HStack>
-
-      {/* Modal for View */}
-      <CustomModal
-        isOpen={isFetchModalOpen}
-        onClose={() => setIsFetchModalOpen(false)}
-        title={`Created By: ${selectedBlog?.owner?.username}`}
-        size={"full"}
-      >
-        <PublicViewBlog blog={selectedBlog} />
-      </CustomModal>
     </VStack>
   );
 };

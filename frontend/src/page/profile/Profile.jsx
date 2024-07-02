@@ -1,7 +1,7 @@
 import { Box, Button, HStack, Image, Text, VStack } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
-import { LogoutButton, MyContainer } from "../../components";
+import { LogoutButton, MetaData, MyContainer } from "../../components";
 import { MdDelete, MdEdit, MdAdd, MdList } from "react-icons/md";
 
 const profileBTNs = [
@@ -32,6 +32,7 @@ const Profile = () => {
 
   return (
     <Box display={"flex"} minHeight={"100vh"}>
+      <MetaData title={userData && userData?.username} />
       <MyContainer
         p="0"
         bg="yellow.500"

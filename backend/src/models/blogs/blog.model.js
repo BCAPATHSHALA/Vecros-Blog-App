@@ -8,6 +8,11 @@ const blogSchema = new mongoose.Schema(
       required: [true, "Please enter blog title"],
       trim: true,
     },
+    slug: {
+      type: String,
+      trim: true,
+      default: "",
+    },
     description: {
       type: String,
       required: [true, "Please enter blog description"],

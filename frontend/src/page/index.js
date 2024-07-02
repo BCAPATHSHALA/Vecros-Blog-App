@@ -9,6 +9,7 @@ import ResetPassword from "./public/password/ResetPassword";
 import CreateBlog from "./profile/CreateBlog";
 import HomePage from "./public/home/HomePage";
 import BlogsPage from "./public/blogs/BlogsPage";
+import NotFoundPage from "./NotFoundPage";
 
 export {
   Login,
@@ -22,4 +23,5 @@ export {
   CreateBlog,
   HomePage,
   BlogsPage,
+  NotFoundPage,
 };

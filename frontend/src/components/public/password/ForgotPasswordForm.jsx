@@ -9,12 +9,14 @@ import {
   Box,
   Heading,
   Text,
+  HStack,
 } from "@chakra-ui/react";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { forgotPassword } from "../../../app/actions/userAction";
 import { clearError, clearMessage } from "../../../app/reducers/userSlice";
+import { IoIosArrowBack } from "react-icons/io";
 
 const ForgotPasswordForm = () => {
   const {
@@ -42,13 +44,19 @@ const ForgotPasswordForm = () => {
   }, [dispatch, error, message, navigate]);
 
   return (
-    <Center minH="100vh">
+    <Center minH={{ base: "70vh", md: "75vh" }}>
       <Box
         p={8}
         rounded="lg"
         shadow="md"
         w={{ base: "90%", sm: "80%", md: "50%" }}
       >
+        <Link alignSelf={"start"} border={"none"} to="/login" mt={4}>
+          <HStack>
+            <IoIosArrowBack />
+            <Text>login</Text>
+          </HStack>
+        </Link>
         <Heading mb={6} textAlign="center" fontSize={"1.5rem"}>
           Forgot Password
         </Heading>
@@ -74,9 +82,6 @@ const ForgotPasswordForm = () => {
             </FormControl>
             <Button type="submit" colorScheme="purple" isLoading={loading}>
               Reset Password
-            </Button>
-            <Button as={Link} border={"none"} to="/login" mt={4}>
-              Back to Login
             </Button>
           </Stack>
         </form>

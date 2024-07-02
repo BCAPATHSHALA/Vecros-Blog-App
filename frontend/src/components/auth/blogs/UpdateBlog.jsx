@@ -10,13 +10,12 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useForm, Controller } from "react-hook-form";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import { useDispatch, useSelector } from "react-redux";
 import { AvailableBlogCategory } from "../../../constant";
 import { updateBlog } from "../../../app/actions/userAction";
 import { useEffect } from "react";
 import { clearError, clearMessage } from "../../../app/reducers/userSlice";
+import RichTextEditor from "../../common/RichTextEditor";
 
 const UpdateBlog = ({ blog }) => {
   const { handleSubmit, register, control, reset } = useForm({
@@ -69,13 +68,18 @@ const UpdateBlog = ({ blog }) => {
         <VStack spacing={4} w="100%">
           <FormControl id="title" isRequired>
             <FormLabel>Title</FormLabel>
-            <Input {...register("title")} placeholder="Blog title" />
+            <Input
+              {...register("title", { required: "Title is required" })}
+              placeholder="Blog title"
+            />
           </FormControl>
 
           <FormControl id="description" isRequired>
             <FormLabel>Description</FormLabel>
             <Input
-              {...register("description")}
+              {...register("description", {
+                required: "Description is required",
+              })}
               placeholder="Blog description"
             />
           </FormControl>
@@ -85,45 +89,7 @@ const UpdateBlog = ({ blog }) => {
             <Controller
               name="content"
               control={control}
-              render={({ field }) => (
-                <ReactQuill
-                  {...field}
-                  theme="snow"
-                  placeholder="Write your blog content here..."
-                  style={{
-                    minHeight: "50vh",
-                    border: "1px solid #CBD5E0",
-                    borderRadius: "md",
-                  }}
-                  formats={[
-                    "header",
-                    "font",
-                    "size",
-                    "bold",
-                    "italic",
-                    "underline",
-                    "strike",
-                    "blockquote",
-                    "list",
-                    "bullet",
-                    "indent",
-                    "link",
-                    "image",
-                    "color",
-                  ]}
-                  modules={{
-                    toolbar: [
-                      [{ header: "1" }, { header: "2" }, { font: [] }],
-                      [{ size: [] }],
-                      ["bold", "italic", "underline", "strike", "blockquote"],
-                      [{ list: "ordered" }, { list: "bullet" }],
-                      ["link"],
-                      ["color"],
-                      ["clean"],
-                    ],
-                  }}
-                />
-              )}
+              render={({ field }) => <RichTextEditor {...field} />}
             />
           </FormControl>
 

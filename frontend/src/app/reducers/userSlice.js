@@ -38,12 +38,14 @@ const userSlice = createSlice({
       state.isAuthenticated = false;
       state.error = action.payload?.message;
       state.accessToken = null;
+      removeItem("accessToken");
     },
     loadProfileRequest: (state) => {
       state.loading = true;
     },
     loadProfileSuccess: (state, action) => {
       state.loading = false;
+      state.isAuthenticated = true;
       state.userData = action.payload?.data?.user;
     },
     loadProfileFail: (state, action) => {
@@ -146,7 +148,6 @@ const userSlice = createSlice({
       state.blogsCount = action.payload?.data?.blogsCount;
       state.totalPages = action.payload?.data?.totalPages;
       state.currentPage = action.payload?.data?.currentPage;
-      console.log("DATA::", action.payload);
     },
     loadAllBlogsPublicallyFail: (state, action) => {
       state.loading = false;

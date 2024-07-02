@@ -4,13 +4,25 @@ import {
   Text,
   VStack,
   HStack,
-  Badge,
   useColorModeValue,
   Card,
 } from "@chakra-ui/react";
 import ReactHtmlParser from "html-react-parser";
+import CodeHighlighter from "../../common/CodeHighlighter";
+import MyContainer from "../../Container/MyContainer";
+import { useLocation } from "react-router-dom";
 
-const PublicViewBlog = ({ blog }) => {
+const PublicViewBlog = () => {
+  const location = useLocation();
+  const { blog } = location.state;
+
+  const transform = (node, index) => {
+    if (node.type === "pre" && node.props.className === "ql-syntax") {
+      return <CodeHighlighter key={index}>{node}</CodeHighlighter>;
+    }
+    return node;
+  };
+
   return (
     <Box
       display="flex"
@@ -19,36 +31,50 @@ const PublicViewBlog = ({ blog }) => {
       maxW="full"
       borderRadius="lg"
       boxShadow="md"
-      p={6}
+      p={{ base: 5, md: 6 }}
       bg={useColorModeValue("white", "gray.800")}
       minH="100vh"
     >
       <VStack align="start" spacing={4}>
-        {/* Card Section */}
-        <Card width="100%" h="25vh" position="relative">
+        <Card
+          width="100%"
+          h={{ base: "20vh", md: "25vh" }}
+          position="relative"
+          p={5}
+        >
           <VStack w="100%" h="100%" justifyContent="center">
-            <Heading as="h2" size="lg" textTransform="uppercase">
+            <Heading
+              as="h3"
+              fontSize={{ base: "1.35rem", md: "1.5rem" }}
+              textTransform="capitalize"
+            >
               {blog.title}
             </Heading>
-
-            <Text fontSize="md">{blog.description}</Text>
+            <Text
+              textAlign={"center"}
+              color={"gray"}
+              fontSize={{ base: "sm", md: "md" }}
+            >
+              {blog.description}
+            </Text>
           </VStack>
         </Card>
 
-        {/* Blog Content */}
-        <Box mt={4} w="100%">
-          {ReactHtmlParser(blog.content)}
-        </Box>
+        <MyContainer bg={"gray.900"} p={5} borderRadius={"10"}>
+          {ReactHtmlParser(blog.content, { transform })}
+        </MyContainer>
       </VStack>
 
       <VStack mt={4} align="start" spacing={2}>
-        {/* Created and Updated Dates */}
         <HStack justifyContent="space-between" w="full">
-          <Text fontSize="sm" color="gray.500">
+          <Text fontSize={{ base: "xs", md: "sm" }} color="gray.500">
             Created at: {new Date(blog.createdAt).toLocaleDateString()}
           </Text>
-
-          <Text fontSize="sm" color="gray.500" textTransform="uppercase">
+          <Text
+            fontSize={{ base: "xs", md: "sm" }}
+            color="gray.500"
+            textTransform="uppercase"
+          >
             {blog.category}
           </Text>
         </HStack>

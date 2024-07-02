@@ -53,9 +53,9 @@ const SignupForm = () => {
   };
 
   return (
-    <Center minH="100vh">
+    <Center minH="75vh">
       <Box
-        p={8}
+        p={4}
         rounded="lg"
         shadow="md"
         w={{ base: "90%", sm: "80%", md: "50%" }}

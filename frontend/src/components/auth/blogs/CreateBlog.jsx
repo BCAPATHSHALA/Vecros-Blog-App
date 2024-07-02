@@ -8,18 +8,24 @@ import {
   VStack,
   Select,
   useColorModeValue,
+  Text,
 } from "@chakra-ui/react";
 import { useForm, Controller } from "react-hook-form";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import { useDispatch, useSelector } from "react-redux";
 import { AvailableBlogCategory } from "../../../constant";
 import { createBlog } from "../../../app/actions/userAction";
 import { useEffect } from "react";
 import { clearError, clearMessage } from "../../../app/reducers/userSlice";
+import RichTextEditor from "../../common/RichTextEditor";
 
 const CreateBlog = () => {
-  const { handleSubmit, register, control, reset } = useForm({
+  const {
+    handleSubmit,
+    register,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       title: "",
       description: "",
@@ -61,15 +67,26 @@ const CreateBlog = () => {
         <VStack spacing={4} w="100%">
           <FormControl id="title" isRequired>
             <FormLabel>Title</FormLabel>
-            <Input {...register("title")} placeholder="Blog title" />
+            <Input
+              {...register("title", { required: true, maxLength: 100 })}
+              placeholder="Blog title"
+            />
+            {errors.title && errors.title.type === "maxLength" && (
+              <Text color="red.500">Title must be at most 100 characters</Text>
+            )}
           </FormControl>
 
           <FormControl id="description" isRequired>
             <FormLabel>Description</FormLabel>
             <Input
-              {...register("description")}
+              {...register("description", { required: true, maxLength: 150 })}
               placeholder="Blog description"
             />
+            {errors.description && errors.description.type === "maxLength" && (
+              <Text color="red.500">
+                Description must be at most 150 characters
+              </Text>
+            )}
           </FormControl>
 
           <FormControl id="content" isRequired>
@@ -77,45 +94,7 @@ const CreateBlog = () => {
             <Controller
               name="content"
               control={control}
-              render={({ field }) => (
-                <ReactQuill
-                  {...field}
-                  theme="snow"
-                  placeholder="Write your blog content here..."
-                  style={{
-                    minHeight: "50vh",
-                    border: "1px solid #CBD5E0",
-                    borderRadius: "md",
-                  }}
-                  formats={[
-                    "header",
-                    "font",
-                    "size",
-                    "bold",
-                    "italic",
-                    "underline",
-                    "strike",
-                    "blockquote",
-                    "list",
-                    "bullet",
-                    "indent",
-                    "link",
-                    "image",
-                    "color",
-                  ]}
-                  modules={{
-                    toolbar: [
-                      [{ header: "1" }, { header: "2" }, { font: [] }],
-                      [{ size: [] }],
-                      ["bold", "italic", "underline", "strike", "blockquote"],
-                      [{ list: "ordered" }, { list: "bullet" }],
-                      ["link"],
-                      ["color"],
-                      ["clean"],
-                    ],
-                  }}
-                />
-              )}
+              render={({ field }) => <RichTextEditor {...field} />}
             />
           </FormControl>
 

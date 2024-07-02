@@ -6,7 +6,10 @@ import theme from "./theme/index.js";
 import { Provider as ReduxProvider } from "react-redux";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
-import { ProtectedRoute as AuthLayout } from "./components/index.js";
+import {
+  ProtectedRoute as AuthLayout,
+  PublicViewBlog,
+} from "./components/index.js";
 import {
   DeleteProfile,
   ForgotPassword,
@@ -19,6 +22,7 @@ import {
   CreateBlog,
   HomePage,
   BlogsPage,
+  NotFoundPage,
 } from "./page/index.js";
 
 const router = createBrowserRouter([
@@ -29,6 +33,14 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <HomePage />,
+      },
+      {
+        path: "blog/:slug",
+        element: <PublicViewBlog />,
+      },
+      {
+        path: "*",
+        element: <NotFoundPage />,
       },
       {
         path: "blogs",

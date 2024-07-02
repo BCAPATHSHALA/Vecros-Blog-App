@@ -9,8 +9,15 @@ import {
   Card,
 } from "@chakra-ui/react";
 import ReactHtmlParser from "html-react-parser";
+import CodeHighlighter from "../../common/CodeHighlighter";
 
 const ViewBlog = ({ blog }) => {
+  const transform = (node, index) => {
+    if (node.type === "pre" && node.props.className === "ql-syntax") {
+      return <CodeHighlighter key={index}>{node}</CodeHighlighter>;
+    }
+    return node;
+  };
   return (
     <Box
       display="flex"
@@ -41,7 +48,7 @@ const ViewBlog = ({ blog }) => {
 
         {/* Blog Content */}
         <Box mt={4} w="100%">
-          {ReactHtmlParser(blog.content)}
+          {ReactHtmlParser(blog.content, { transform })}
         </Box>
       </VStack>
 

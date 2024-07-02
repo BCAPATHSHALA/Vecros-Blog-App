@@ -5,6 +5,18 @@ import { Blog } from "../models/blogs/blog.model.js";
 import { User } from "../models/auth/user.model.js";
 import { ApiFeatures } from "../utils/apiFeatures.js";
 
+//? Create the slug for each post
+const generateSlug = (title) => {
+  if (title && typeof title === "string") {
+    return title
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-zA-Z\d\s]+/g, "-")
+      .replace(/\s/g, "-");
+  }
+  return "";
+};
+
 // Blog Management Controllers
 const createBlog = asyncHandler(async (req, res) => {
   // Step 1: Get blog data from user
@@ -20,6 +32,9 @@ const createBlog = asyncHandler(async (req, res) => {
     throw new ApiError(400, "All fields are required");
   }
 
+  // Todo: Create slug using title
+  const slug = generateSlug(title);
+
   // Step 3: Create the new blog
   const blog = await Blog.create({
     title,
@@ -28,6 +43,7 @@ const createBlog = asyncHandler(async (req, res) => {
     category,
     owner,
     isPublished: isPublished || false,
+    slug: slug || "",
   });
 
   if (!blog) {
@@ -59,10 +75,22 @@ const updateBlog = asyncHandler(async (req, res) => {
     throw new ApiError(400, "All fields are required");
   }
 
+  // Todo: Create slug using title
+  const slug = generateSlug(title);
+
   // Step 3: Find and update the blog
   const updatedBlog = await Blog.findByIdAndUpdate(
     blogId,
-    { $set: { title, description, content, category, isPublished } },
+    {
+      $set: {
+        title,
+        description,
+        content,
+        category,
+        isPublished,
+        slug,
+      },
+    },
     { new: true }
   );
 
@@ -155,7 +183,10 @@ const fetchAllBlogPublic = asyncHandler(async (req, res) => {
     .paginate(10);
 
   // Step 2: Get all filtered and paginated blogs
-  const blogs = await apiFeatures.queryObject.populate("owner", "username -_id");
+  const blogs = await apiFeatures.queryObject.populate(
+    "owner",
+    "username -_id"
+  );
 
   // Calculation to manage the pagination from client side
   const resultLimitPerPage = 10;

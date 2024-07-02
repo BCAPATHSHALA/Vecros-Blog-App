@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
-    <Center minH={"100vh"}>
+    <Center minH={"75vh"}>
       <VStack>
         <Heading fontSize={{ base: "2rem", md: "3rem", lg: "4rem" }}>
           Vecros Blog Applcation

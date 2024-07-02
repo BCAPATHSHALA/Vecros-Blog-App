@@ -58,14 +58,12 @@ const LoginForm = () => {
   }, [dispatch, error, message, navigate, accessToken]);
 
   return (
-    <Center minH="100vh">
+    <Center minH={{ base: "73vh", md: "70vh" }}>
       <Box
-        p={8}
+        p={4}
         rounded="lg"
         shadow="md"
         w={{ base: "90%", sm: "80%", md: "50%" }}
-        mt={5}
-        mb={5}
       >
         <Heading mb={6} textAlign="center" fontSize={"1.5rem"}>
           Welcome to Vecros
