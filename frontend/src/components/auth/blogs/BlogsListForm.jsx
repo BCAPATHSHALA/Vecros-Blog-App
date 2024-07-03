@@ -126,13 +126,6 @@ const BlogsListForm = () => {
               ))}
             </Select>
           </FormControl>
-
-          <Button
-            type="submit"
-            flexBasis={{ base: "100%", sm: "45%", md: "30%" }}
-          >
-            Filter
-          </Button>
         </HStack>
       </form>
 

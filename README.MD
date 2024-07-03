@@ -1,6 +1,11 @@
 # Vecros Blog Application
 
-![Vecros Technologies](https://res.cloudinary.com/dq3pru6ji/image/upload/v1719732821/VECROS_BLOG_APPLICATION_DB_PROTOTYPE_fuzdyy.png)
+<div style="text-align: center;">
+    <img src="https://res.cloudinary.com/dq3pru6ji/image/upload/v1719986780/VECROS_BLOG_APPLICATION_DB_PROTOTYPE_jlvkad.png" alt="Vecros Technologies">
+</div>
+<div style="text-align: center;">
+    <img src="https://res.cloudinary.com/dq3pru6ji/image/upload/v1719986961/AUTH_SYSTEM_FOR_BLOG_APPLICATION_cagwwk.png" alt="Auth System for Blog Application">
+</div>
 
 ## Description
 

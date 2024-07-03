@@ -28,12 +28,29 @@ const userSlice = createSlice({
     },
     loginSuccess: (state, action) => {
       state.loading = false;
-      state.isAuthenticated = true;
+      state.isAuthenticated = action.payload?.message === "OTP has been sent to your registered email." ? false : true;
       state.message = action.payload?.message;
       state.userData = action.payload?.data?.user;
       state.accessToken = action.payload?.data?.accessToken;
     },
     loginFail: (state, action) => {
+      state.loading = false;
+      state.isAuthenticated = false;
+      state.error = action.payload?.message;
+      state.accessToken = null;
+      removeItem("accessToken");
+    },
+    verifyOTPRequest: (state) => {
+      state.loading = true;
+    },
+    verifyOTPSuccess: (state, action) => {
+      state.loading = false;
+      state.isAuthenticated = true;
+      state.message = action.payload?.message;
+      state.userData = action.payload?.data?.user;
+      state.accessToken = action.payload?.data?.accessToken;
+    },
+    verifyOTPFail: (state, action) => {
       state.loading = false;
       state.isAuthenticated = false;
       state.error = action.payload?.message;
@@ -273,6 +290,9 @@ export const {
   updateBlogFail,
   updateBlogRequest,
   updateBlogSuccess,
+  verifyOTPFail,
+  verifyOTPRequest,
+  verifyOTPSuccess,
   clearError,
   clearMessage,
   clearAccessToken,

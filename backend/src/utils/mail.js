@@ -68,7 +68,24 @@ const forgotPasswordMailgenContent = (username, passwordResetUrl) => {
   };
 };
 
-export {
-  sendEmail,
-  forgotPasswordMailgenContent,
+const OTPMailgenContent = (username, emailOTP) => {
+  return {
+    body: {
+      name: username,
+      intro:
+        "We got a request to verify our account with OTP (One-Time Password).",
+      action: {
+        instructions: `Please use the following OTP (One-Time Password) to complete the verification process`,
+        button: {
+          color: "#006d77",
+          text: emailOTP,
+          link: "#",
+        },
+      },
+      outro:
+        "If you did not request this verification or need further assistance, please contact us immediately.",
+    },
+  };
 };
+
+export { sendEmail, forgotPasswordMailgenContent, OTPMailgenContent };

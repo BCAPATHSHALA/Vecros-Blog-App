@@ -32,7 +32,7 @@ const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { message, error, loading, accessToken } = useSelector(
+  const { message, error, loading, accessToken, isAuthenticated } = useSelector(
     (state) => state.user
   );
 
@@ -56,6 +56,14 @@ const LoginForm = () => {
       navigate("/profile");
     }
   }, [dispatch, error, message, navigate, accessToken]);
+
+  useEffect(() => {
+    if (isAuthenticated && accessToken) {
+      navigate("/profile");
+    } else if (message === "OTP has been sent to your registered email." && !isAuthenticated) {
+      navigate("/verify-otp");
+    }
+  }, [accessToken, navigate, isAuthenticated, message]);
 
   return (
     <Center minH={{ base: "73vh", md: "70vh" }}>

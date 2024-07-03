@@ -22,6 +22,7 @@ import ForgotPasswordForm from "./public/password/ForgotPasswordForm";
 import ResetPasswordForm from "./public/password/ResetPasswordForm";
 import UpdateProfile from "./auth/profile/UpdateProfile";
 import DeleteProfile from "./auth/profile/DeleteProfile";
+import VerifyOTP from "./public/verifyOTP/VerifyOTP";
 
 // Auth Component
 import LogoutButton from "./auth/profile/LogoutButton";
@@ -53,4 +54,5 @@ export {
   CodeHighlighter,
   MetaData,
   PublicViewBlog,
+  VerifyOTP,
 };

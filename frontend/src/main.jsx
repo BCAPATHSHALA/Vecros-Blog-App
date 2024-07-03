@@ -23,6 +23,7 @@ import {
   HomePage,
   BlogsPage,
   NotFoundPage,
+  VerifyOTP,
 } from "./page/index.js";
 
 const router = createBrowserRouter([
@@ -59,6 +60,14 @@ const router = createBrowserRouter([
         element: (
           <AuthLayout authentication={false}>
             <Signup />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "verify-otp",
+        element: (
+          <AuthLayout authentication={false}>
+            <VerifyOTP />
           </AuthLayout>
         ),
       },

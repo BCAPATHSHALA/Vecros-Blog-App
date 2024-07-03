@@ -44,7 +44,7 @@ const SignupForm = () => {
     }
     if (message) {
       dispatch(clearMessage());
-      navigate("/login");
+      navigate("/verify-otp");
     }
   }, [dispatch, error, message, navigate]);
 

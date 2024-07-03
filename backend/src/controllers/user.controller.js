@@ -4,9 +4,13 @@ import { User } from "../models/auth/user.model.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
-import { forgotPasswordMailgenContent, sendEmail } from "../utils/mail.js";
+import {
+  forgotPasswordMailgenContent,
+  OTPMailgenContent,
+  sendEmail,
+} from "../utils/mail.js";
 
-// Method to generate the access and refresh token
+//? Method to generate the access and refresh token
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
     const user = await User.findOne(userId);
@@ -28,6 +32,61 @@ const generateAccessAndRefreshTokens = async (userId) => {
 };
 
 // Public Controllers
+const verifyOTP = asyncHandler(async (req, res) => {
+  // Step 1: get OTP from user
+  const { randomOTP } = req.body;
+
+  if (!randomOTP) {
+    throw new ApiError("OTP is required");
+  }
+
+  // Step 2: hash random OTP and verify it
+  const otp = crypto.createHash("sha256").update(randomOTP).digest("hex");
+
+  const user = await User.findOne({
+    otp,
+    otpExpiry: {
+      $gt: Date.now(),
+    },
+  }).select("-password -refreshToken");
+
+  if (!user) {
+    throw new ApiError(401, "OTP has been expired or invalid.");
+  }
+
+  // Step 3: generate the access and refresh token
+  const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
+    user?._id
+  );
+
+  // Step 4: update the otp, expiry, and isVerified
+  user.otp = undefined;
+  user.otpExpiry = undefined;
+  user.isVerified = true;
+  await user.save({ validateBeforeSave: false });
+
+  // Step 5: send cookies with returning the response
+  const options = {
+    httpOnly: true,
+    secure: true,
+  };
+
+  return res
+    .status(200)
+    .cookie("accessToken", accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
+    .json(
+      new ApiResponse(
+        200,
+        {
+          accessToken,
+          refreshToken,
+        },
+        "User logged in successfully"
+      )
+    );
+});
+
 const registerUser = asyncHandler(async (req, res) => {
   // Step 1: get user details from frontend
   const { fullName, email, username, password, confirmPassword } = req.body;
@@ -70,11 +129,34 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Something went wrong while registering the user");
   }
 
+  // TODO: Generate and send OTP
+  const randomOTP = createUser.generateRandomOTPToken();
+  createUser.save({ validateBeforeSave: false });
+
+  // send OTP
+  const response = await sendEmail({
+    email: createUser?.email,
+    subject: "OTP from Vecros Blog Application",
+    mailgenContent: OTPMailgenContent(createUser.username, randomOTP),
+  });
+
+  // check message sent or not
+  if (!response) {
+    createUser.otp = undefined;
+    createUser.otpExpiry = undefined;
+    await createUser.save({ validateBeforeSave: false });
+    throw new ApiError(404, "Error sending email");
+  }
+
   // Step 6: return the response to the client
   return res
     .status(201)
     .json(
-      new ApiResponse(201, { user: createUser }, "User registered successfully")
+      new ApiResponse(
+        201,
+        {},
+        "Profile created successfully & OTP has been sent to your registered email."
+      )
     );
 });
 
@@ -95,6 +177,38 @@ const loginUser = asyncHandler(async (req, res) => {
   // Step 4: check user does exist or not
   if (!user) {
     throw new ApiError(404, "User does not exist");
+  }
+
+  // Todo: Validate the email is verified or not
+  if (!user.isVerified) {
+    // Action 1: Generate and send OTP
+    const randomOTP = user.generateRandomOTPToken();
+    user.save({ validateBeforeSave: false });
+
+    // send OTP
+    const response = await sendEmail({
+      email: user?.email,
+      subject: "OTP from Vecros Blog Application",
+      mailgenContent: OTPMailgenContent(user.username, randomOTP),
+    });
+
+    // check message sent or not
+    if (!response) {
+      user.otp = undefined;
+      user.otpExpiry = undefined;
+      await user.save({ validateBeforeSave: false });
+      throw new ApiError(404, "Error sending email");
+    }
+
+    // Action 2: Save input password as new password
+    user.password = password;
+    await user.save({ validateBeforeSave: false });
+
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(200, {}, "OTP has been sent to your registered email.")
+      );
   }
 
   // Step 5: verify the input password from DB password
@@ -147,6 +261,11 @@ const forgotPassword = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
   if (!user) {
     throw new ApiError(404, "Invalid registered email or user does not exist");
+  }
+
+  // Todo: Validate the email is verified or not
+  if (!user.isVerified) {
+    throw new ApiError(400, "First verify your email id through login.");
   }
 
   // Step 2: generate reset token and save user
@@ -392,4 +511,5 @@ export {
   getUserProfile,
   updateUserProfile,
   deleteUserProfile,
+  verifyOTP,
 };

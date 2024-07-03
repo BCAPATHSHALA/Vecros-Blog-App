@@ -49,8 +49,14 @@ const userSchema = new mongoose.Schema(
     refreshToken: {
       type: String,
     },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
     resetPasswordToken: String,
     resetPasswordTokenExpiry: Date,
+    otp: String,
+    otpExpiry: Date,
   },
   { timestamps: true }
 );
@@ -113,6 +119,21 @@ userSchema.methods.getResetPasswordToken = function () {
 
   // Return Reset Token
   return resetToken;
+};
+
+// Use our custom method "generateRandomOTPToken" to generate the random OTP
+userSchema.methods.generateRandomOTPToken = function () {
+  // Step 1: Generate 6 digit random OTP
+  const randomOTP = Math.floor(100000 + Math.random() * 900000).toString();
+
+  // Step 2: Hashed Random OTP
+  this.otp = crypto.createHash("sha256").update(randomOTP).digest("hex");
+
+  // Step 3: Set OTP Expiry
+  this.otpExpiry = Date.now() + 15 * 60 * 1000; // 15 minutes
+
+  // Return Random OTP
+  return randomOTP;
 };
 
 export const User = mongoose.model("Users", userSchema);

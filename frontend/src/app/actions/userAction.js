@@ -41,6 +41,9 @@ import {
   updateBlogRequest,
   updateBlogSuccess,
   updateBlogFail,
+  verifyOTPFail,
+  verifyOTPRequest,
+  verifyOTPSuccess,
 } from "../reducers/userSlice";
 import api from "../../utils/axiosClient";
 
@@ -302,3 +305,23 @@ export const updateBlog =
       dispatch(updateBlogFail(error.response.data));
     }
   };
+
+export const verifyOTP = (randomOTP) => async (dispatch) => {
+  try {
+    dispatch(verifyOTPRequest());
+
+    const { data } = await api.post(
+      `/users/verify-otp`,
+      { randomOTP },
+      {
+        headers: {
+          "Content-type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+    dispatch(verifyOTPSuccess(data));
+  } catch (error) {
+    dispatch(verifyOTPFail(error.response.data));
+  }
+};

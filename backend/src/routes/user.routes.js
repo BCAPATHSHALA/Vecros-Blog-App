@@ -9,6 +9,7 @@ import {
   refreshAccessToken,
   updateUserProfile,
   deleteUserProfile,
+  verifyOTP,
 } from "../controllers/user.controller.js";
 import { verifyJWT } from "../middleware/auth.middleware.js";
 
@@ -19,6 +20,7 @@ router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);
 router.route("/forgot-password").post(forgotPassword);
 router.route("/reset-password/:resetToken").post(resetPassword);
+router.route("/verify-otp").post(verifyOTP);
 
 // Secure Routes For Profile Management System
 router.route("/profile").get(verifyJWT, getUserProfile);
