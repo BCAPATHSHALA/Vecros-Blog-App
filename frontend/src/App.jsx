@@ -26,6 +26,7 @@ const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // For tracking the each url of website
   useEffect(() => {
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
