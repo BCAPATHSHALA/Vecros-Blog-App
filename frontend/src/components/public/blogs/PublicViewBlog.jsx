@@ -1,16 +1,17 @@
 import {
-  Box,
   Heading,
   Text,
   VStack,
   HStack,
   useColorModeValue,
   Card,
+  Badge,
 } from "@chakra-ui/react";
 import ReactHtmlParser from "html-react-parser";
 import CodeHighlighter from "../../common/CodeHighlighter";
 import MyContainer from "../../Container/MyContainer";
 import { useLocation } from "react-router-dom";
+import MetaData from "../../common/MetaData";
 
 const PublicViewBlog = () => {
   const location = useLocation();
@@ -24,19 +25,20 @@ const PublicViewBlog = () => {
   };
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      justifyContent="space-between"
-      maxW="full"
+    <MyContainer
       borderRadius="lg"
       boxShadow="md"
-      p={{ base: 5, md: 6 }}
       bg={useColorModeValue("white", "gray.800")}
       minH="100vh"
     >
       {blog && (
         <>
+          <MetaData
+            title={blog.title}
+            description={blog.description}
+            keywords={`Console Busters Blog Application, Console Busters, ${blog?.keywords}`}
+          />
+
           <VStack align="start" spacing={4}>
             <Card
               width="100%"
@@ -62,12 +64,12 @@ const PublicViewBlog = () => {
               </VStack>
             </Card>
 
-            <MyContainer bg={"gray.900"} p={5} borderRadius={"10"}>
+            <MyContainer p={10} minH="70vh">
               {ReactHtmlParser(blog.content, { transform })}
             </MyContainer>
           </VStack>
 
-          <VStack mt={4} align="start" spacing={2}>
+          <VStack mt={4} align="start" spacing={2} p={5}>
             <HStack justifyContent="space-between" w="full">
               <Text fontSize={{ base: "xs", md: "sm" }} color="gray.500">
                 Created at: {new Date(blog.createdAt).toLocaleDateString()}
@@ -79,11 +81,14 @@ const PublicViewBlog = () => {
               >
                 {blog.category}
               </Text>
+              <Text fontSize={{ base: "xs", md: "sm" }} color="gray.500">
+                Created By:{` @${blog.owner && blog.owner.username}`}
+              </Text>
             </HStack>
           </VStack>
         </>
       )}
-    </Box>
+    </MyContainer>
   );
 };
 

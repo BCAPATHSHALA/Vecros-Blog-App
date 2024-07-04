@@ -24,6 +24,7 @@ import {
   BlogsPage,
   NotFoundPage,
   VerifyOTP,
+  ToolsPage,
 } from "./page/index.js";
 
 const router = createBrowserRouter([
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "blogs",
         element: <BlogsPage />,
+      },
+      {
+        path: "tools",
+        element: <ToolsPage />,
       },
       {
         path: "login",

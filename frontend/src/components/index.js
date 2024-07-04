@@ -23,6 +23,7 @@ import ResetPasswordForm from "./public/password/ResetPasswordForm";
 import UpdateProfile from "./auth/profile/UpdateProfile";
 import DeleteProfile from "./auth/profile/DeleteProfile";
 import VerifyOTP from "./public/verifyOTP/VerifyOTP";
+import Tools from "./public/tools/Tools";
 
 // Auth Component
 import LogoutButton from "./auth/profile/LogoutButton";
@@ -55,4 +56,5 @@ export {
   MetaData,
   PublicViewBlog,
   VerifyOTP,
+  Tools
 };

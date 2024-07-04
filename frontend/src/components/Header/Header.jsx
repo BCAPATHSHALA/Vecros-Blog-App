@@ -1,7 +1,7 @@
 import { Link, Heading, HStack, Text, VStack, Flex } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { LiaBlogSolid } from "react-icons/lia";
+import { PiCodeBold } from "react-icons/pi";
 
 const Header = () => {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -9,6 +9,7 @@ const Header = () => {
     { path: "/", label: "Home", active: true },
     { path: "/blogs", label: "Blogs", active: true },
     { path: "/login", label: "Login", active: !isAuthenticated },
+    { path: "/tools", label: "Tools", active: true },
   ];
   return (
     <Flex
@@ -19,9 +20,9 @@ const Header = () => {
       width="100%"
     >
       <HStack bg="purple.500" mb={{ base: 4, md: 0 }} borderRadius="10" px={2}>
-        <LiaBlogSolid size={"2rem"} />
+        <PiCodeBold size={"3rem"} />
         <VStack p={3} spacing={0}>
-          <Heading size="md">Vecros</Heading>
+          <Heading size="md">Console Busters</Heading>
           <Text fontSize="sm">Blog Application</Text>
         </VStack>
       </HStack>
@@ -34,7 +35,7 @@ const Header = () => {
                 as={NavLink}
                 to={route.path}
                 marginRight={{ base: "0", md: "2" }}
-                _activeLink={{ color: "#1d3557" }}
+                _activeLink={{ color: "#805AD5" }}
               >
                 {route.label}
               </Link>

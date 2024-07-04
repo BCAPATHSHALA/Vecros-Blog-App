@@ -44,7 +44,7 @@ const Footer = () => {
       gap={2}
     >
       <Text fontSize={{ base: "10", md: "16" }} mb={{ base: 2, md: 0 }}>
-        &copy; 2024 VECROS. All rights reserved. Developed by Manoj Kumar
+        &copy; 2024 Console Busters. All rights reserved.
       </Text>
       <HStack spacing={4} ml={{ md: 4 }}>
         {socialLinks.map((link) => (

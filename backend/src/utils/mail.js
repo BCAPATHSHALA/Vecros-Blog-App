@@ -7,7 +7,7 @@ const sendEmail = async (options) => {
   const mailGenerator = new Mailgen({
     theme: "default",
     product: {
-      name: "VECROS BLOG APP",
+      name: "CONSOLE BUSTERS BLOG APP",
       link: "https://www.linkedin.com/in/manojoffcialmj/",
     },
   });
@@ -31,7 +31,7 @@ const sendEmail = async (options) => {
 
   // Step 5: Create the mail metadata
   const mail = {
-    from: "jaikhatushyambabaji32@gmail.com",
+    from: process.env.SMTP_MAIL,
     to: options.email,
     subject: options.subject,
     text: emailTextual,
@@ -47,7 +47,6 @@ const sendEmail = async (options) => {
   }
 };
 
-// It designs the forgot password mail
 const forgotPasswordMailgenContent = (username, passwordResetUrl) => {
   return {
     body: {
@@ -72,16 +71,7 @@ const OTPMailgenContent = (username, emailOTP) => {
   return {
     body: {
       name: username,
-      intro:
-        "We got a request to verify our account with OTP (One-Time Password).",
-      action: {
-        instructions: `Please use the following OTP (One-Time Password) to complete the verification process`,
-        button: {
-          color: "#006d77",
-          text: emailOTP,
-          link: "#",
-        },
-      },
+      intro: `We received a request to verify your account with an OTP (One-Time Password). Your OTP is: <strong>${emailOTP}</strong>`,
       outro:
         "If you did not request this verification or need further assistance, please contact us immediately.",
     },

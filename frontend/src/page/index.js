@@ -11,6 +11,7 @@ import HomePage from "./public/home/HomePage";
 import BlogsPage from "./public/blogs/BlogsPage";
 import NotFoundPage from "./NotFoundPage";
 import VerifyOTP from "./public/password/VerifyOTP";
+import ToolsPage from "./public/tools/ToolsPage";
 
 export {
   Login,
@@ -26,4 +27,5 @@ export {
   BlogsPage,
   NotFoundPage,
   VerifyOTP,
+  ToolsPage,
 };

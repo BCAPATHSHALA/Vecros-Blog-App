@@ -8,6 +8,7 @@ import {
   VStack,
   Select,
   useColorModeValue,
+  Text,
 } from "@chakra-ui/react";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,13 +19,20 @@ import { clearError, clearMessage } from "../../../app/reducers/userSlice";
 import RichTextEditor from "../../common/RichTextEditor";
 
 const UpdateBlog = ({ blog }) => {
-  const { handleSubmit, register, control, reset } = useForm({
+  const {
+    handleSubmit,
+    register,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       title: blog.title,
       description: blog.description,
       content: blog.content,
       category: blog.category,
       isPublished: blog.isPublished,
+      keywords: blog?.keywords,
     },
   });
 
@@ -32,9 +40,18 @@ const UpdateBlog = ({ blog }) => {
   const dispatch = useDispatch();
 
   const onSubmit = async (data) => {
-    const { title, description, content, category, isPublished } = data;
+    const { title, description, content, category, isPublished, keywords } =
+      data;
     dispatch(
-      updateBlog(title, description, content, category, isPublished, blog._id)
+      updateBlog(
+        title,
+        description,
+        content,
+        category,
+        isPublished,
+        keywords,
+        blog._id
+      )
     );
   };
 
@@ -50,6 +67,7 @@ const UpdateBlog = ({ blog }) => {
         content: blog.content,
         category: blog.category,
         isPublished: blog.isPublished,
+        keywords: blog?.keywords,
       });
     }
   }, [dispatch, error, message, reset, blog]);
@@ -69,19 +87,25 @@ const UpdateBlog = ({ blog }) => {
           <FormControl id="title" isRequired>
             <FormLabel>Title</FormLabel>
             <Input
-              {...register("title", { required: "Title is required" })}
+              {...register("title", { required: true, maxLength: 100 })}
               placeholder="Blog title"
             />
+            {errors.title && errors.title.type === "maxLength" && (
+              <Text color="red.500">Title must be at most 100 characters</Text>
+            )}
           </FormControl>
 
           <FormControl id="description" isRequired>
             <FormLabel>Description</FormLabel>
             <Input
-              {...register("description", {
-                required: "Description is required",
-              })}
+              {...register("description", { required: true, maxLength: 150 })}
               placeholder="Blog description"
             />
+            {errors.description && errors.description.type === "maxLength" && (
+              <Text color="red.500">
+                Description must be at most 150 characters
+              </Text>
+            )}
           </FormControl>
 
           <FormControl id="content" isRequired>
@@ -102,6 +126,19 @@ const UpdateBlog = ({ blog }) => {
                 </option>
               ))}
             </Select>
+          </FormControl>
+
+          <FormControl id="keywords" isRequired>
+            <FormLabel>Keywords for SEO</FormLabel>
+            <Input
+              {...register("keywords", { maxLength: 150 })}
+              placeholder="keyword1, keyword2, keyword3, ...."
+            />
+            {errors.keywords && errors.keywords.type === "maxLength" && (
+              <Text color="red.500">
+                Keywords must be at most 150 characters
+              </Text>
+            )}
           </FormControl>
 
           <FormControl display="flex" alignItems="center">

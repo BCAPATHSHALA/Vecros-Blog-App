@@ -264,13 +264,14 @@ export const fetchBlog = (id) => async (dispatch) => {
 };
 
 export const createBlog =
-  (title, description, content, category, isPublished) => async (dispatch) => {
+  (title, description, content, category, isPublished, keywords) =>
+  async (dispatch) => {
     try {
       dispatch(createBlogRequest());
 
       const { data } = await api.post(
         `/blogs/create`,
-        { title, description, content, category, isPublished },
+        { title, description, content, category, isPublished, keywords },
         {
           headers: {
             "Content-type": "application/json",
@@ -285,14 +286,14 @@ export const createBlog =
   };
 
 export const updateBlog =
-  (title, description, content, category, isPublished, id) =>
+  (title, description, content, category, isPublished, keywords, id) =>
   async (dispatch) => {
     try {
       dispatch(updateBlogRequest());
 
       const { data } = await api.patch(
         `/blogs/update/${id}`,
-        { title, description, content, category, isPublished },
+        { title, description, content, category, isPublished, keywords },
         {
           headers: {
             "Content-type": "application/json",

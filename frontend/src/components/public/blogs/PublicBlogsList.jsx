@@ -74,8 +74,9 @@ const PublicBlogsList = () => {
             <Card
               key={blog._id}
               w={"100%"}
-              h={{ base: "auto", md: "400px" }}
+              h={{ base: "auto", md: "500px" }}
               mb={4}
+              bg={"#e5e5e5"}
             >
               <CardBody>
                 <VStack
@@ -107,8 +108,11 @@ const PublicBlogsList = () => {
                   </Text>
                 </VStack>
               </CardBody>
-              <Divider />
-              <CardFooter>
+              <CardFooter
+                bg={"#dad7cd"}
+                borderBottomEndRadius={10}
+                borderBottomStartRadius={10}
+              >
                 <VStack w="full" spacing={2}>
                   <Button
                     variant="solid"

@@ -22,6 +22,10 @@ const blogSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please enter blog content"],
     },
+    keywords: {
+      type: String,
+      default: "",
+    },
     owner: {
       type: mongoose.Types.ObjectId,
       ref: "Users",

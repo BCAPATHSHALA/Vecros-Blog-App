@@ -39,8 +39,11 @@ const CreateBlog = () => {
   const dispatch = useDispatch();
 
   const onSubmit = async (data) => {
-    const { title, description, content, category, isPublished } = data;
-    dispatch(createBlog(title, description, content, category, isPublished));
+    const { title, description, content, category, isPublished, keywords } =
+      data;
+    dispatch(
+      createBlog(title, description, content, category, isPublished, keywords)
+    );
   };
 
   useEffect(() => {
@@ -107,6 +110,19 @@ const CreateBlog = () => {
                 </option>
               ))}
             </Select>
+          </FormControl>
+
+          <FormControl id="keywords" isRequired>
+            <FormLabel>Keywords for SEO</FormLabel>
+            <Input
+              {...register("keywords", { maxLength: 150 })}
+              placeholder="keyword1, keyword2, keyword3, ...."
+            />
+            {errors.keywords && errors.keywords.type === "maxLength" && (
+              <Text color="red.500">
+                Keywords must be at most 150 characters
+              </Text>
+            )}
           </FormControl>
 
           <FormControl display="flex" alignItems="center">

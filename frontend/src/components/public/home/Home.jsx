@@ -5,10 +5,10 @@ const Home = () => {
   return (
     <Center minH={"75vh"}>
       <VStack>
-        <Heading fontSize={{ base: "2rem", md: "3rem", lg: "4rem" }}>
-          Vecros Blog Applcation
+        <Heading textAlign={"center"} fontSize={{ base: "2rem", md: "3rem", lg: "4rem" }}>
+        Console Busters Blog Application
         </Heading>
-        <Text fontSize={{ base: "0.9rem", md: "1.2rem", lg: "1.6rem" }}>
+        <Text fontSize={{ base: "0.7rem", md: "1.2rem", lg: "1.6rem" }}>
           Create Your Blog & Share Your Skills
         </Text>
         <Link to={"/blogs"}>

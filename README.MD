@@ -1,7 +1,7 @@
-# Vecros Blog Application
+# Console Busters Blog Application
 
 <div style="text-align: center;">
-    <img src="https://res.cloudinary.com/dq3pru6ji/image/upload/v1719986780/VECROS_BLOG_APPLICATION_DB_PROTOTYPE_jlvkad.png" alt="Vecros Technologies">
+    <img src="https://res.cloudinary.com/dq3pru6ji/image/upload/v1719986780/VECROS_BLOG_APPLICATION_DB_PROTOTYPE_jlvkad.png" alt="Console Busters">
 </div>
 <div style="text-align: center;">
     <img src="https://res.cloudinary.com/dq3pru6ji/image/upload/v1719986961/AUTH_SYSTEM_FOR_BLOG_APPLICATION_cagwwk.png" alt="Auth System for Blog Application">

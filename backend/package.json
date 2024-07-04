@@ -1,7 +1,7 @@
 {
-  "name": "vecros",
+  "name": "console-busters",
   "version": "1.0.0",
-  "description": "this is a vecros blog application server api",
+  "description": "this is a console busters blog application server api",
   "main": "index.js",
   "type": "module",
   "scripts": {

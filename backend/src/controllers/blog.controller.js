@@ -20,7 +20,8 @@ const generateSlug = (title) => {
 // Blog Management Controllers
 const createBlog = asyncHandler(async (req, res) => {
   // Step 1: Get blog data from user
-  const { title, description, content, category, isPublished } = req.body;
+  const { title, description, content, category, isPublished, keywords } =
+    req.body;
   const owner = req.user?._id;
 
   // Step 2: Validation for not empty fields
@@ -44,6 +45,7 @@ const createBlog = asyncHandler(async (req, res) => {
     owner,
     isPublished: isPublished || false,
     slug: slug || "",
+    keywords: keywords || "",
   });
 
   if (!blog) {
@@ -63,7 +65,8 @@ const createBlog = asyncHandler(async (req, res) => {
 
 const updateBlog = asyncHandler(async (req, res) => {
   // Step 1: Get blog data from user
-  const { title, description, content, category, isPublished } = req.body;
+  const { title, description, content, category, isPublished, keywords } =
+    req.body;
   const blogId = req.params?.id;
 
   // Step 2: Validation for not empty fields
@@ -89,6 +92,7 @@ const updateBlog = asyncHandler(async (req, res) => {
         category,
         isPublished,
         slug,
+        keywords,
       },
     },
     { new: true }
