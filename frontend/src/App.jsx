@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import { ColorModeSwitcher, Footer, Header } from "./components";
+import { Footer, Header } from "./components";
 import { Outlet, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,11 +14,21 @@ import {
   loadProfile,
 } from "./app/actions/userAction.js";
 
+// Google Analytics
+import config from "./config/index.js";
+import ReactGA from "react-ga";
+const TRACKING_ID = config.GOOGLE_TRACKING_ID;
+ReactGA.initialize(TRACKING_ID);
+
 const App = () => {
   const { message, error, accessToken } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
 
   useEffect(() => {
     dispatch(fetchAllBlogsPulically());
