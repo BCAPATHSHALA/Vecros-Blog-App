@@ -62,6 +62,7 @@ const userSlice = createSlice({
     },
     loadProfileSuccess: (state, action) => {
       state.loading = false;
+      state.isAuthenticated = action.payload?.data?.user ? true : false;
       state.userData = action.payload?.data?.user;
     },
     loadProfileFail: (state, action) => {
