@@ -27,5 +27,5 @@ export {
   BlogsPage,
   NotFoundPage,
   VerifyOTP,
-  ToolsPage,
+  ToolsPage, 
 };
