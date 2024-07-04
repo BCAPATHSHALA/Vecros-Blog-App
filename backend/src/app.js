@@ -24,7 +24,7 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 app.get("/", (req, res) => {
-  return res.send("<h1>Vecros blog app server is working fine✅</h1>");
+  return res.send("<h1>Console Busters blog app server is working fine✅</h1>");
 });
 
 // Import the routes
